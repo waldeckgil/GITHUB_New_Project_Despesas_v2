@@ -12,7 +12,17 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-app.use(cors());
+// Defina a URL do seu frontend no Netlify como origem permitida
+const netlifyUrl = 'https://comforting-maamoul-8e28f7.netlify.app';
+
+// Configuração do CORS para permitir apenas a sua URL do Netlify
+app.use(cors({
+  origin: netlifyUrl
+}));
+
+// Linha original comentada para referência:
+// app.use(cors()); 
+
 app.use(express.json());
 
 // Rota para adicionar uma despesa
