@@ -3,8 +3,8 @@ const despesaList = document.getElementById('despesa-list');
 
 //const API_URL = 'http://localhost:3000';
 // apos ativar o google cloud não executa mais localmente 
-const API_URL = 'https://despesas-app-cloud.rj.r.appspot.com';
-
+//const API_URL = 'https://despesas-app-cloud.rj.r.appspot.com';
+const API_URL = 'https://github-cliente1-parte1.onrender.com';
 // Função para buscar e exibir despesas
 async function fetchDespesas() {
     try {
