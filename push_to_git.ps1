@@ -1,6 +1,7 @@
 # Script para automatizar o processo de commit e push para o GitHub
 
 # Adiciona todos os arquivos alterados ao stage
+Write-Host "Executando: git add ."
 git add .
 
 # Solicita a mensagem do commit
@@ -14,9 +15,16 @@ if ([string]::IsNullOrEmpty($commitMessage)) {
 }
 
 # Realiza o commit com a mensagem fornecida
+Write-Host "Executando: git commit -m `"$commitMessage`""
 git commit -m "$commitMessage"
 
 # Envia as alterações para o repositório remoto na branch 'master'
+Write-Host "Executando: git push origin master"
 git push origin master
 
-Write-Host "Processo concluído! Os arquivos foram enviados para o GitHub."
+Write-Host "---"
+Write-Host "Processo de envio para o GitHub concluído com sucesso!"
+Write-Host "Comandos executados:"
+Write-Host "- git add ."
+Write-Host "- git commit -m ""$commitMessage"""
+Write-Host "- git push origin master"
