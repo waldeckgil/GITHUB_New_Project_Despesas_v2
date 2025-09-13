@@ -1,5 +1,9 @@
 # Script para automatizar o processo de commit e push para o GitHub
 
+# Remove o arquivo .env do cache do Git para que ele não seja rastreado
+Write-Host "Executando: git rm --cached .env"
+git rm --cached .env
+
 # Adiciona todos os arquivos alterados ao stage
 Write-Host "Executando: git add ."
 git add .
@@ -25,6 +29,7 @@ git push origin master
 Write-Host "---"
 Write-Host "Processo de envio para o GitHub concluído com sucesso!"
 Write-Host "Comandos executados:"
+Write-Host "- git rm --cached .env"
 Write-Host "- git add ."
 Write-Host "- git commit -m ""$commitMessage"""
 Write-Host "- git push origin master"

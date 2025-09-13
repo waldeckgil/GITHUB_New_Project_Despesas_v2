@@ -1,6 +1,6 @@
 const despesaForm = document.getElementById('despesa-form');
 const despesaList = document.getElementById('despesa-list');
-
+// configuraçoes de arquivos .....
 //const API_URL = 'http://localhost:3000';
 // apos ativar o google cloud não executa mais localmente 
 //const API_URL = 'https://despesas-app-cloud.rj.r.appspot.com';
