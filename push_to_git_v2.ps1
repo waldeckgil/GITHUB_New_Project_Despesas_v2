@@ -15,20 +15,24 @@ if ($isFirstPush.ToUpper() -eq "S") {
     # ---
     Write-Host "---"
     Write-Host "Configuração inicial para o primeiro envio ao GitHub."
+    Write-Host " "
+    Write-Host "Lembrete Importante: Por favor, crie primeiro o repositório vazio no GitHub."
+    Write-Host "O script só consegue enviar arquivos para um repositório que já existe."
+    Write-Host " "
 
     # Solicita o nome do repositório
-    Write-Host "Por favor, digite o nome EXATO do repositório a ser usado no GitHub:"
+    Write-Host "Por favor, digite o nome do repositório a ser criado no GitHub:"
     $repoName = Read-Host
 
     # Informa o nome de usuário do GitHub
     $githubUser = "Waldeckgil"
     Write-Host "O seu usuário do GitHub é: $githubUser"
 
-    # Inicializa o repositório Git localmente (ignora se já existe)
+    # Inicializa o repositório Git localmente
     Write-Host "Executando: git init"
     git init
 
-    # Conecta o repositório local ao repositório remoto no GitHub (ignora se já existe)
+    # Conecta o repositório local ao repositório remoto no GitHub
     Write-Host "Executando: git remote add origin https://github.com/$githubUser/$repoName.git"
     git remote add origin "https://github.com/$githubUser/$repoName.git"
 
@@ -42,13 +46,6 @@ if ($isFirstPush.ToUpper() -eq "S") {
     Write-Host "---"
     Write-Host "Iniciando processo de commit e push para o repositório existente."
 }
-
-# ---
-# AJUSTES E VERIFICAÇÕES (NOVO BLOCO)
-# ---
-# Renomeia a branch 'master' para 'main' se necessário
-Write-Host "Verificando a branch atual..."
-git branch -M main
 
 # ---
 # BLOCO DE COMANDOS PARA COMIT E PUSH (COMUM AOS DOIS CENÁRIOS)
