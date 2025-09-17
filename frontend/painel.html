@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Finance Control - Painel</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <h1>Acesso waldeckgil@gmail.com</h1>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="E-mail" required />
+                <input type="password" id="login-password" placeholder="Senha" required />
+                <button type="submit">Entrar</button>
+            </form>
+            <p>Não tem uma conta? <a href="#" id="link-cadastro">Cadastre-se</a></p>
+        </div>
+    </div>
+
+    <div id="cadastro-screen" class="screen hidden">
+        <div class="login-container">
+            <h1>Criar Nova Conta</h1>
+            <form id="cadastro-form">
+                <input type="text" id="cadastro-nome" placeholder="Nome" required />
+                <input type="email" id="cadastro-email" placeholder="E-mail" required />
+                <input type="password" id="cadastro-password" placeholder="Senha" required />
+                <input type="password" id="cadastro-password-confirm" placeholder="Confirmar Senha" required />
+                <button type="submit">Cadastrar</button>
+            </form>
+            <p>Já tem uma conta? <a href="#" id="link-login">Faça Login</a></p>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" class="screen hidden">
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="logo-text">Finance Control</span>
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle profile-pic"></i>
+                    <h4 id="user-name-display" class="user-name">Usuário</h4>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li class="nav-item active"><a href="#"><i class="fas fa-home"></i> Início</a></li>
+                        <!-- Removed "Relatórios" and "Configurações" -->
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <header class="header">
+                    <h2>Painel Financeiro</h2>
+                    <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                </header>
+
+                <section class="summary-cards">
+                    <div class="card receita">
+                        <h3>Receita Mensal</h3>
+                        <p id="receita-total">R$ 0,00</p>
+                        <small>Atualizado com suas transações</small>
+                    </div>
+                    <div class="card despesa">
+                        <h3>Despesa Mensal</h3>
+                        <p id="despesa-total">R$ 0,00</p>
+                        <small>Atualizado com suas transações</small>
+                    </div>
+                    <div class="card saldo">
+                        <h3>Saldo</h3>
+                        <p id="saldo-total">R$ 0,00</p>
+                        <small>Atualizado com suas transações</small>
+                    </div>
+                </section>
+
+                <section class="transaction-form-and-chart">
+                    <div class="transaction-form-container">
+                        <h3>Adicionar Despesa/Receita</h3>
+                        <form id="despesa-form">
+                            <input type="text" id="descricao" placeholder="Descrição" required />
+                            <input type="number" id="valor" placeholder="Valor" required />
+                            <select id="tipo" required>
+                                <option value="" disabled selected>Tipo</option>
+                                <option value="receita">Receita</option>
+                                <option value="despesa">Despesa</option>
+                            </select>
+                            <select id="categoria" required>
+                                <option value="" disabled selected>Categoria</option>
+                                <option value="alimentacao">Alimentação</option>
+                                <option value="transporte">Transporte</option>
+                                <option value="lazer">Lazer</option>
+                                <option value="moradia">Moradia</option>
+                                <option value="outros">Outros</option>
+                            </select>
+                            <button type="submit">Adicionar</button>
+                        </form>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Distribuição de Despesas por Categoria</h3>
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </section>
+
+                <section class="recent-transactions">
+                    <h3>Últimas 10 movimentações</h3>
+                    <table id="despesa-table">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Categoria</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
