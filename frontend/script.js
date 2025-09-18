@@ -17,8 +17,20 @@ const saldoTotalSpan = document.getElementById('saldo-total');
 const despesaTableBody = document.querySelector('#despesa-table tbody');
 const userNameDisplay = document.getElementById('user-name-display');
 
+// Novo elemento para Consulta: Link na barra lateral
+const consultaLink = document.getElementById('consulta-link');
+
+// Elementos do modal de consulta
+const consultaModal = document.getElementById('consulta-modal');
+const closeModal = document.querySelector('.close-modal');
+const consultarBtn = document.getElementById('consultar-btn');
+const dateRangeInput = document.getElementById('date-range');
+
 // Adiciona uma variável global para o gráfico: Armazena a instância do gráfico para destruição e recriação
 let myChart = null;
+
+// Variável para armazenar a instância do Flatpickr
+let flatpickrInstance = null;
 
 // URL da API: Define o endpoint do backend para chamadas de API
 const API_URL = 'https://github-new-project-despesas-v2.onrender.com';
@@ -94,6 +106,85 @@ function handleLogout() {
     localStorage.removeItem('userName');
     showScreen(loginScreen);
     console.log("Usuário deslogado.");
+}
+
+// --- Função para Consulta (Agora com calendário e backend) ---
+// Função para abrir o modal de consulta
+function openConsultaModal(e) {
+    e.preventDefault();
+    consultaModal.classList.remove('hidden');
+    // Inicializar Flatpickr se não estiver inicializado
+    if (!flatpickrInstance) {
+        flatpickrInstance = flatpickr("#date-range", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            locale: {
+                firstDayOfWeek: 1, // Monday
+                weekdays: {
+                    shorthand: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+                    longhand: ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
+                },
+                months: {
+                    shorthand: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                    longhand: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+                }
+            }
+        });
+    }
+}
+
+// Função para fechar o modal
+function closeConsultaModal() {
+    consultaModal.classList.add('hidden');
+    if (flatpickrInstance) {
+        flatpickrInstance.clear();
+    }
+}
+
+// Função para consultar transações por período
+async function handleConsultar() {
+    const dates = flatpickrInstance.selectedDates;
+    if (dates.length !== 2) {
+        alert("Por favor, selecione uma data inicial e uma data final.");
+        return;
+    }
+
+    const dataInicio = dates[0].toISOString().split('T')[0];
+    const dataFim = dates[1].toISOString().split('T')[0];
+    const token = localStorage.getItem('sessionToken');
+
+    try {
+        const response = await fetch(`${API_URL}/despesas/periodo?data_inicio=${dataInicio}&data_fim=${dataFim}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                alert("Sessão expirada. Por favor, faça login novamente.");
+                handleLogout();
+            }
+            throw new Error('Erro ao consultar transações.');
+        }
+
+        const transacoes = await response.json();
+
+        // Exibir os resultados (por enquanto, em um alerta; futuramente, pode ser uma tabela ou modal separado)
+        if (transacoes.length > 0) {
+            let message = `Encontradas ${transacoes.length} transações no período de ${dataInicio} a ${dataFim}:\n\n`;
+            transacoes.forEach(t => {
+                message += `${t.descricao}: R$ ${t.valor} (${t.tipo}) - ${new Date(t.created_at).toLocaleDateString('pt-BR')}\n`;
+            });
+            alert(message);
+        } else {
+            alert(`Nenhuma transação encontrada no período de ${dataInicio} a ${dataFim}.`);
+        }
+
+        closeConsultaModal();
+
+    } catch (error) {
+        console.error("Erro ao consultar transações:", error);
+        alert("Erro ao consultar transações. Tente novamente.");
+    }
 }
 
 // --- Lógica do Dashboard (Agora com o backend real) ---
@@ -250,6 +341,20 @@ document.addEventListener('DOMContentLoaded', checkAuthentication);
 loginForm.addEventListener('submit', handleLogin);
 cadastroForm.addEventListener('submit', handleCadastro);
 logoutBtn.addEventListener('click', handleLogout);
+
+// Novo ouvinte para o link de Consulta
+consultaLink.addEventListener('click', openConsultaModal);
+
+// Ouvintes para o modal
+closeModal.addEventListener('click', closeConsultaModal);
+consultarBtn.addEventListener('click', handleConsultar);
+
+// Fechar modal ao clicar fora
+window.addEventListener('click', (e) => {
+    if (e.target === consultaModal) {
+        closeConsultaModal();
+    }
+});
 
 linkCadastro.addEventListener('click', (e) => {
     e.preventDefault();

@@ -103,6 +103,25 @@ app.get('/despesas', authMiddleware, async (req, res) => {
     }
 });
 
+// Novo endpoint para consultar transações por período
+app.get('/despesas/periodo', authMiddleware, async (req, res) => {
+    const { data_inicio, data_fim } = req.query;
+    const userId = req.user.id;
+    try {
+        const { data, error } = await supabase
+            .from('despesas_v2')
+            .select('*')
+            .eq('user_id', userId)
+            .gte('created_at', data_inicio)
+            .lte('created_at', data_fim);
+
+        if (error) return res.status(400).json({ error: error.message });
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no servidor' });
+    }
+});
+
 app.delete('/despesas/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;

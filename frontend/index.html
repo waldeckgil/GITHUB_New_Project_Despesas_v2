@@ -6,6 +6,8 @@
     <title>Finance Control - Painel</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Link para Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <!-- Tela de Login: Formulário para o usuário fazer login com e-mail e senha -->
@@ -48,6 +50,13 @@
                 <div class="user-profile">
                     <i class="fas fa-user-circle profile-pic"></i>
                     <h4 id="user-name-display" class="user-name">Usuário</h4>
+                </div>
+                <!-- Novo item Consulta: Link para futura funcionalidade de consulta por período -->
+                <div class="consulta-section">
+                    <a href="#" id="consulta-link">
+                        <i class="fas fa-search"></i>
+                        <span>Consulta</span>
+                    </a>
                 </div>
                 <nav class="main-nav">
                     <ul>
@@ -133,7 +142,21 @@
             </main>
         </div>
     </div>
+
+    <!-- Modal para Consulta por Período -->
+    <div id="consulta-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Consulta por Período</h3>
+            <p>Selecione a data inicial e final para consultar suas transações:</p>
+            <input type="text" id="date-range" placeholder="Selecione o período" />
+            <button id="consultar-btn">Consultar</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Script para Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="script.js"></script>
 </body>
 </html>
