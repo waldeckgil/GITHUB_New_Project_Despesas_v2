@@ -22,8 +22,8 @@ const userNameDisplay = document.getElementById('user-name-display');
 let myChart = null;
 
 // URL da API
-const API_URL = 'http://localhost:4000';
-
+//const API_URL = 'http://localhost:4000';
+const API_URL = process.env.API_URL || 'http://localhost:4000';
 // --- Funções para gerenciar a exibição das telas ---
 function showScreen(screen) {
     loginScreen.classList.add('hidden');
