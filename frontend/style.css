@@ -2,16 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-    --primary-color: #2e3b4e;
-    --secondary-color: #556080;
-    --accent-color: #6c63ff;
-    --background-light: #f4f7f6;
-    --text-dark: #333;
+    --primary-color: #3b82f6; /* Azul suave e profissional */
+    --secondary-color: #e5e7eb; /* Cinza claro */
+    --accent-color: #10b981; /* Verde de destaque */
+    --background-light: #f9fafb; /* Cinza muito claro */
+    --text-dark: #1f2937; /* Preto suave */
     --text-light: #fff;
     --card-bg: #fff;
-    --receita-color: #28a745; /* Verde para Receita */
-    --despesa-color: #e74c3c; /* Vermelho para Despesa */
-    --saldo-color: #3498db; /* Azul para Saldo */
+    --receita-color: #28a745;
+    --despesa-color: #ef4444; /* Vermelho mais moderno */
+    --saldo-color: #3b82f6; /* Usando a cor primária */
+    --border-color: #d1d5db; /* Cor de borda suave */
+    --shadow-color: rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -34,403 +36,309 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: opacity 0.5s ease-in-out;
+    width: 100%;
 }
 
-.screen.hidden {
+.hidden {
     display: none;
 }
 
 /* ------------------ */
-/* Tela de Login/Cadastro */
+/* Telas de Login e Cadastro */
 /* ------------------ */
 .login-container {
     background-color: var(--card-bg);
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-color);
     text-align: center;
+    max-width: 400px;
+    width: 90%;
 }
 
 .login-container h1 {
     margin-bottom: 20px;
     color: var(--primary-color);
-    font-weight: 700;
+    font-size: 24px;
 }
 
 .login-container form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 .login-container input {
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .login-container button {
     padding: 12px;
-    background-color: var(--accent-color);
+    background-color: var(--primary-color);
     color: var(--text-light);
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .login-container button:hover {
-    background-color: #5d55d2;
+    background-color: #2563eb;
 }
 
 .login-container p {
-    margin-top: 15px;
+    margin-top: 20px;
+    font-size: 14px;
 }
 
 .login-container a {
-    color: var(--accent-color);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
 }
 
+.login-container a:hover {
+    text-decoration: underline;
+}
+
 /* ------------------ */
-/* Dashboard Principal */
+/* Dashboard */
 /* ------------------ */
 .dashboard-container {
     display: flex;
-    min-height: 100vh;
-}
-
-/* Sidebar */
-.sidebar {
-    width: 120px;
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    padding: 10px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-
-
-
-
-.sidebar .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.sidebar .logo i {
-    font-size: 2rem;
-    color: var(--accent-color);
-}
-
-.sidebar .logo-text {
-    font-weight: 700;
-    font-size: 1.2rem;
-}
-
-.sidebar .user-profile {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.sidebar .profile-pic {
     width: 100%;
-    max-width: 80px;
-    height: auto;
-    border-radius: 50%;
-    border: 3px solid var(--accent-color);
-    margin: 0 auto 10px auto;
-    display: block;
-    object-fit: cover;
-    max-height: 80px;
-    min-width: 80px;
-    max-width: 100%;
+    min-height: 100vh;
+    background-color: var(--background-light);
 }
 
-
-
-
-
-
-
-.sidebar .user-name {
-    font-weight: 500;
-}
-
-.sidebar .main-nav {
-    width: 100%;
-}
-
-.sidebar .nav-item {
-    list-style: none;
-    margin-bottom: 15px;
-}
-
-.sidebar .nav-item a {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: var(--text-light);
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .nav-item a:hover,
-.sidebar .nav-item.active a {
-    background-color: var(--secondary-color);
-}
-
-.sidebar .nav-item a i {
-    font-size: 1.2rem;
-}
-
-/* Conteúdo Principal */
 .main-content {
-    flex: 1;
-    padding: 5px;
+    flex-grow: 1;
+    padding: 40px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-
-
-
-
+/* Cabeçalho */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-}
-
-.header h2 {
-    font-size: 1.8rem;
-    color: var(--primary-color);
-}
-
-.logout-btn {
-    background-color: var(--despesa-color);
-    color: var(--text-light);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-    background-color: #c0392b;
-}
-
-/* --- Estilo para os cards de totais (melhorado) --- */
-.summary-cards {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-    margin-bottom: 30px;
     flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
-
-
-
-
-
-
-.card {
-    background-color: var(--card-bg);
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    min-width: 150px;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card h3 {
-    margin: 0;
-    font-size: 1.1em;
-    color: #555;
-    font-weight: 600;
-}
-
-.card p {
-    font-size: 2.5em;
-    font-weight: 700;
-    margin: 10px 0 0;
-}
-
-.card small {
-    display: block;
-    margin-top: 5px;
-    color: #888;
-}
-
-/* Cores específicas para cada card, usando as variáveis CSS */
-.receita p {
-    color: var(--receita-color);
-}
-
-.despesa p {
-    color: var(--despesa-color);
-}
-
-.saldo p {
-    color: var(--saldo-color);
-}
-
-/* ------------------ */
-/* Formulário e Tabela */
-/* ------------------ */
-.transaction-form-and-chart {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-
-
-
-
-
-
-.transaction-form-container,
-.chart-container {
-    flex: 1;
-}
-
-.transaction-form-container h3,
-.recent-transactions h3 {
-    margin-bottom: 15px;
+.header h1 {
     color: var(--primary-color);
+    font-size: 28px;
 }
 
-#despesa-form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+.user-profile {
+    display: flex;
+    align-items: center;
     gap: 15px;
 }
 
-#despesa-form input,
-#despesa-form select,
-#despesa-form button {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 0.9em;
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
-#despesa-form button {
-    grid-column: 1 / -1;
-    background-color: var(--accent-color);
-    color: var(--text-light);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#despesa-form button:hover {
-    background-color: #5d55d2;
-}
-
-#despesa-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--card-bg);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-#despesa-table th,
-#despesa-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
-
-#despesa-table th {
-    background-color: #f8f8f8;
-    color: var(--primary-color);
+.user-profile .user-name {
     font-weight: 500;
 }
 
-.delete-btn {
+.logout-btn {
+    padding: 8px 16px;
     background-color: var(--despesa-color);
     color: var(--text-light);
     border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
+    font-size: 14px;
 }
 
-.delete-btn:hover {
-    background-color: #c0392b;
+.logout-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* Seções de cards, formulário, etc. */
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.totals-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    text-align: center;
+    border-left: 5px solid transparent;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #6b7280;
+}
+
+.card p {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.receita-card { border-left-color: var(--receita-color); }
+.despesa-card { border-left-color: var(--despesa-color); }
+.saldo-card { border-left-color: var(--saldo-color); }
+
+/* Seção de Formulário e Gráfico */
+.transaction-form-and-chart {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.transaction-form,
+.chart-container {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    flex: 1;
+    min-width: 300px;
+}
+
+.transaction-form h3,
+.chart-container h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: var(--text-dark);
+}
+
+.transaction-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-form input,
+.transaction-form select {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.transaction-form button {
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.transaction-form button:hover {
+    background-color: #059669;
+}
+
+/* Seção de Transações Recentes */
+.recent-transactions {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.recent-transactions h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: var(--text-dark);
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.recent-transactions table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-transactions th,
+.recent-transactions td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.recent-transactions th {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+}
+
+.recent-transactions tr:last-child td {
+    border-bottom: none;
+}
+
+.recent-transactions .delete-btn {
+    background-color: transparent;
+    color: var(--despesa-color);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Rodapé */
+.footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #6b7280;
 }
 
 /* Responsividade */
-@media (max-width: 1024px) {
-    .sidebar {
-        width: 100px;
-    }
-    .main-content {
-        padding: 10px;
-    }
-    .summary-cards {
-        gap: 2px;
-    }
-    .card {
-        min-width: 100px;
-    }
-    .transaction-form-and-chart {
-        gap: 5px;
-    }
-}
-
-
-
-
-
 @media (max-width: 768px) {
-    .dashboard-container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 15px;
-    }
-    .sidebar .logo,
-    .sidebar .user-profile {
-        margin-bottom: 0;
-    }
-    .sidebar .user-name {
-        display: none;
-    }
-    .sidebar .main-nav {
-        display: none; /* Esconder a navegação para telas pequenas por enquanto */
-    }
     .main-content {
         padding: 20px;
     }
@@ -441,58 +349,5 @@ body {
     }
     .transaction-form-and-chart {
         flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
-    .login-container {
-        padding: 30px;
-        max-width: 350px;
-    }
-    .dashboard-container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 10px;
-    }
-    .sidebar .logo,
-    .sidebar .user-profile {
-        margin-bottom: 0;
-    }
-    .sidebar .user-name {
-        display: none;
-    }
-    .sidebar .main-nav {
-        display: none;
-    }
-    .main-content {
-        padding: 15px;
-    }
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    .summary-cards {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .card {
-        min-width: unset;
-        width: 100%;
-    }
-    .transaction-form-and-chart {
-        flex-direction: column;
-        gap: 15px;
-    }
-    #despesa-form {
-        grid-template-columns: 1fr;
-    }
-    #despesa-form button {
-        grid-column: unset;
     }
 }
