@@ -18,7 +18,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Defina a URL do seu frontend no Netlify como origem permitida
-//const netlifyUrl = 'https://comforting-maamoul-8e28f7.netlify.app';
+
   const netlifyUrl = 'https://projeto0002.netlify.app';
 
 
