@@ -1,4 +1,4 @@
-// Referências para os elementos do DOM
+// Referências para os elementos do DOM: Selecionam os elementos HTML para manipulação
 const loginScreen = document.getElementById('login-screen');
 const cadastroScreen = document.getElementById('cadastro-screen');
 const dashboardScreen = document.getElementById('dashboard-screen');
@@ -11,21 +11,20 @@ const logoutBtn = document.querySelector('.logout-btn');
 const linkCadastro = document.getElementById('link-cadastro');
 const linkLogin = document.getElementById('link-login');
 
-// Referências para os totais do dashboard
 const receitaTotalSpan = document.getElementById('receita-total');
 const despesaTotalSpan = document.getElementById('despesa-total');
 const saldoTotalSpan = document.getElementById('saldo-total');
 const despesaTableBody = document.querySelector('#despesa-table tbody');
 const userNameDisplay = document.getElementById('user-name-display');
 
-// Adiciona uma variável global para o gráfico
+// Adiciona uma variável global para o gráfico: Armazena a instância do gráfico para destruição e recriação
 let myChart = null;
 
-// URL da API
-//const API_URL = 'http://localhost:4000';
+// URL da API: Define o endpoint do backend para chamadas de API
 const API_URL = 'https://github-new-project-despesas-v2.onrender.com';
-//const API_URL = process.env.API_URL || 'http://localhost:4000';
+
 // --- Funções para gerenciar a exibição das telas ---
+// Função para mostrar uma tela específica e ocultar as outras
 function showScreen(screen) {
     loginScreen.classList.add('hidden');
     cadastroScreen.classList.add('hidden');
@@ -34,6 +33,7 @@ function showScreen(screen) {
 }
 
 // --- Funções de Autenticação (Agora com o backend real) ---
+// Função para lidar com o login: Envia dados para o backend e gerencia a resposta
 async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
@@ -61,6 +61,7 @@ async function handleLogin(e) {
     }
 }
 
+// Função para lidar com o cadastro: Envia dados para o backend e gerencia a resposta
 async function handleCadastro(e) {
     e.preventDefault();
     const email = document.getElementById('cadastro-email').value;
@@ -87,6 +88,7 @@ async function handleCadastro(e) {
     }
 }
 
+// Função para lidar com o logout: Remove dados do localStorage e volta para a tela de login
 function handleLogout() {
     localStorage.removeItem('sessionToken');
     localStorage.removeItem('userName');
@@ -95,6 +97,7 @@ function handleLogout() {
 }
 
 // --- Lógica do Dashboard (Agora com o backend real) ---
+// Função para buscar transações do backend: Faz requisição autenticada e atualiza a UI
 async function fetchTransacoes() {
     const token = localStorage.getItem('sessionToken');
     if (!token) {
@@ -117,28 +120,26 @@ async function fetchTransacoes() {
 
         const transacoes = await response.json();
 
-        // Sort transactions by date descending
+        // Ordena transações por data decrescente
         transacoes.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        // Take only the last 10 for the table
+        // Pega apenas as últimas 10 para a tabela
         const recentTransacoes = transacoes.slice(0, 10);
 
-        // Limpar a tabela
-
+        // Limpa a tabela
         despesaTableBody.innerHTML = '';
 
-        // Calcular totais
+        // Calcula totais de receita, despesa e saldo
         const receitaTotal = transacoes.filter(t => t.tipo.toLowerCase() === 'receita').reduce((sum, t) => sum + t.valor, 0);
         const despesaTotal = transacoes.filter(t => t.tipo.toLowerCase() === 'despesa').reduce((sum, t) => sum + Math.abs(t.valor), 0);
         const saldoTotal = receitaTotal - despesaTotal;
 
-        // Renderizar os totais nos cards
+        // Atualiza os cards de resumo
         receitaTotalSpan.textContent = `R$ ${receitaTotal.toFixed(2)}`;
         despesaTotalSpan.textContent = `R$ ${despesaTotal.toFixed(2)}`;
         saldoTotalSpan.textContent = `R$ ${saldoTotal.toFixed(2)}`;
 
-        // Renderizar a lista de transações
+        // Renderiza a lista de transações na tabela
         recentTransacoes.forEach(transacao => {
-
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${transacao.descricao}</td>
@@ -151,30 +152,29 @@ async function fetchTransacoes() {
             despesaTableBody.appendChild(row);
         });
 
-        // Chama a função para renderizar o gráfico com os dados
+        // Chama a função para renderizar o gráfico
         renderChart(transacoes);
 
-        // A CORREÇÃO PRINCIPAL: 
-        // A tela do dashboard só é exibida e o botão de logout habilitado após o sucesso do fetch.
+        // Mostra o dashboard após sucesso
         showScreen(dashboardScreen);
         logoutBtn.removeAttribute('disabled');
 
     } catch (error) {
         console.error("Erro ao buscar transações:", error);
-        // Em caso de erro, força o logout para garantir um estado limpo
         handleLogout(); 
         alert("Ocorreu um erro ao carregar seus dados. Por favor, faça login novamente.");
     }
 }
 
 // --- Função para renderizar o gráfico ---
+// Função para criar ou atualizar o gráfico de distribuição de despesas
 function renderChart(transacoes) {
-    // Destrói o gráfico anterior se ele existir para evitar sobreposição
+    // Destrói o gráfico anterior se existir
     if (myChart) {
         myChart.destroy();
     }
     
-    // Agrupa as transações por categoria
+    // Agrupa transações por categoria (apenas despesas)
     const categorias = {};
     transacoes.forEach(t => {
         if (t.tipo.toLowerCase() === 'despesa') {
@@ -216,6 +216,7 @@ function renderChart(transacoes) {
     });
 }
 
+// Função para lidar com a exclusão de transações: Confirma e envia requisição de delete
 async function handleDelete(e) {
     if (e.target.classList.contains('delete-btn')) {
         const id = e.target.dataset.id;
@@ -244,6 +245,7 @@ async function handleDelete(e) {
 }
 
 // --- Event Listeners ---
+// Adiciona ouvintes de eventos para formulários e botões
 document.addEventListener('DOMContentLoaded', checkAuthentication);
 loginForm.addEventListener('submit', handleLogin);
 cadastroForm.addEventListener('submit', handleCadastro);
@@ -259,6 +261,7 @@ linkLogin.addEventListener('click', (e) => {
     showScreen(loginScreen);
 });
 
+// Ouvinte para o formulário de transação: Adiciona nova transação
 despesaForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('sessionToken');
@@ -285,7 +288,6 @@ despesaForm.addEventListener('submit', async (e) => {
         if (response.ok) {
             alert('Transação adicionada com sucesso!');
             despesaForm.reset();
-            // Atualiza a lista e o gráfico, o que também vai garantir que o botão "Sair" esteja visível
             fetchTransacoes(); 
         } else {
             const data = await response.json();
@@ -297,15 +299,16 @@ despesaForm.addEventListener('submit', async (e) => {
     }
 });
 
+// Ouvinte para a tabela: Trata cliques no botão de excluir
 despesaTableBody.addEventListener('click', handleDelete);
 
-// Checa a autenticação ao carregar a página
+// Função para verificar autenticação ao carregar a página
 function checkAuthentication() {
     const token = localStorage.getItem('sessionToken');
     if (token) {
         const userName = localStorage.getItem('userName');
         userNameDisplay.textContent = userName;
-        fetchTransacoes(); // Carrega os dados do dashboard
+        fetchTransacoes();
     } else {
         showScreen(loginScreen);
     }

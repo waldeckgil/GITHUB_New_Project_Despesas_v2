@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
+    <!-- Tela de Login: Formulário para o usuário fazer login com e-mail e senha -->
     <div id="login-screen" class="screen">
         <div class="login-container">
             <h1>Acesso waldeckgil@gmail.com</h1>
@@ -20,6 +21,7 @@
         </div>
     </div>
 
+    <!-- Tela de Cadastro: Formulário para criar uma nova conta com nome, e-mail e senha -->
     <div id="cadastro-screen" class="screen hidden">
         <div class="login-container">
             <h1>Criar Nova Conta</h1>
@@ -34,8 +36,10 @@
         </div>
     </div>
 
+    <!-- Tela do Dashboard: Área principal após login, contendo barra lateral, conteúdo principal com cards, formulário, gráfico e tabela -->
     <div id="dashboard-screen" class="screen hidden">
         <div class="dashboard-container">
+            <!-- Barra Lateral: Contém logo, perfil do usuário e navegação -->
             <aside class="sidebar">
                 <div class="logo">
                     <i class="fas fa-chart-line"></i>
@@ -53,12 +57,14 @@
                 </nav>
             </aside>
 
+            <!-- Conteúdo Principal: Área central com header, cards de resumo, formulário de transação, gráfico e tabela de transações -->
             <main class="main-content">
                 <header class="header">
                     <h2>Painel Financeiro</h2>
                     <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
                 </header>
 
+                <!-- Cards de Resumo: Exibem receita, despesa e saldo mensal -->
                 <section class="summary-cards">
                     <div class="card receita">
                         <h3>Receita Mensal</h3>
@@ -77,6 +83,7 @@
                     </div>
                 </section>
 
+                <!-- Seção de Formulário e Gráfico: Formulário para adicionar transações e gráfico de distribuição de despesas -->
                 <section class="transaction-form-and-chart">
                     <div class="transaction-form-container">
                         <h3>Adicionar Despesa/Receita</h3>
@@ -106,6 +113,7 @@
                     </div>
                 </section>
 
+                <!-- Tabela de Transações Recentes: Lista as últimas 10 movimentações com opção de excluir -->
                 <section class="recent-transactions">
                     <h3>Últimas 10 movimentações</h3>
                     <table id="despesa-table">
