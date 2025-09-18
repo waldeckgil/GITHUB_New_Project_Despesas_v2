@@ -17,6 +17,12 @@ const supabaseUrl = 'https://yyayfhfgowguqzvpnghp.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5YXlmaGZnb3dndXF6dnBuZ2hwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwNDAwNjYsImV4cCI6MjA3MTYxNjA2Nn0.LmEfxJbEQh0lRCthTiIdJlZbojHG6VORWz9B76zEb-s';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// Defina a URL do seu frontend no Netlify como origem permitida
+//const netlifyUrl = 'https://comforting-maamoul-8e28f7.netlify.app';
+  const netlifyUrl = 'https://projeto0002.netlify.app';
+
+
+
 // Middleware para verificar o token de autenticação
 const authMiddleware = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
